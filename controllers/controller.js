@@ -40,7 +40,11 @@ exports.home = async (req, res, next) => {
     let password = null;
 
     if(passwordCookie) {
-        password = AES.decrypt(decodeURIComponent(passwordCookie).substring(passwordCookie.indexOf('=') + 1), 'changeit').toString(CryptoJS.enc.Utf8);
+        try {
+            password = AES.decrypt(decodeURIComponent(passwordCookie).substring(passwordCookie.indexOf('=') + 1), 'changeit').toString(CryptoJS.enc.Utf8);
+        } catch(err) {
+            console.log(err);
+        }
     }
 
     await User.findOne({email: email, password: password}).then(u => {
@@ -113,7 +117,11 @@ exports.signupPost = async (req, res, next) => {
             try {
                 await User.create(newUser)
                     .then((user) => {
-                        var encrypted = AES.encrypt(req.body.password, 'changeit').toString();
+                        try {
+                            var encrypted = AES.encrypt(req.body.password, 'changeit').toString();
+                        } catch(err) {
+                            console.log(err);
+                        }
                         res.cookie('email', req.body.email, { maxAge: 2.16E+09, httpOnly: true });
                         res.cookie('password', encrypted, { maxAge: 2.16E+09, httpOnly: true });
                         return res.redirect('/');
@@ -157,8 +165,11 @@ exports.signinGet = (req, res, next) => {
 exports.signinPost = async (req, res, next) => {
     await User.findOne({email: req.body.email, password: req.body.password}).then(u => {
         if(u) {
-            var encrypted = AES.encrypt(req.body.password, 'changeit').toString();
-            //var decrypted = AES.decrypt(encrypted, 'changeit');
+            try {
+                var encrypted = AES.encrypt(req.body.password, 'changeit').toString();
+            } catch(err) {
+                console.log(err);
+            }
             res.cookie('email', req.body.email, { maxAge: 2.16E+09, httpOnly: true });
             res.cookie('password', encrypted, { maxAge: 2.16E+09, httpOnly: true });
             return res.redirect('/');
@@ -203,7 +214,11 @@ exports.profileGet = async (req, res, next) => {
     let password = null;
 
     if(passwordCookie) {
-        password = AES.decrypt(decodeURIComponent(passwordCookie).substring(passwordCookie.indexOf('=') + 1), 'changeit').toString(CryptoJS.enc.Utf8);
+        try {
+            password = AES.decrypt(decodeURIComponent(passwordCookie).substring(passwordCookie.indexOf('=') + 1), 'changeit').toString(CryptoJS.enc.Utf8);
+        } catch(err) {
+            console.log(err);
+        }
     }
 
     if(password === user.password && email === user.email) {
@@ -260,7 +275,11 @@ exports.profilePost = async (req, res, next) => {
     let password = null;
 
     if(passwordCookie) {
-        password = AES.decrypt(decodeURIComponent(passwordCookie).substring(passwordCookie.indexOf('=') + 1), 'changeit').toString(CryptoJS.enc.Utf8);
+        try {
+            password = AES.decrypt(decodeURIComponent(passwordCookie).substring(passwordCookie.indexOf('=') + 1), 'changeit').toString(CryptoJS.enc.Utf8);
+        } catch(err) {
+            console.log(err);
+        }
     }
 
     if(password === user.password && email === user.email) {
@@ -356,7 +375,11 @@ exports.addGet = async (req, res, next) => {
     let password = null;
 
     if(passwordCookie) {
-        password = AES.decrypt(decodeURIComponent(passwordCookie).substring(passwordCookie.indexOf('=') + 1), 'changeit').toString(CryptoJS.enc.Utf8);
+        try{
+            password = AES.decrypt(decodeURIComponent(passwordCookie).substring(passwordCookie.indexOf('=') + 1), 'changeit').toString(CryptoJS.enc.Utf8);
+        } catch(err) {
+            console.log(err);
+        }
     }
 
     await User.findOne({email: email, password: password}).then(u => {
@@ -443,7 +466,11 @@ exports.addPost = async (req, res, next) => {
     let password = null;
 
     if(passwordCookie) {
-        password = AES.decrypt(decodeURIComponent(passwordCookie).substring(passwordCookie.indexOf('=') + 1), 'changeit').toString(CryptoJS.enc.Utf8);
+        try {
+            password = AES.decrypt(decodeURIComponent(passwordCookie).substring(passwordCookie.indexOf('=') + 1), 'changeit').toString(CryptoJS.enc.Utf8);
+        } catch(err) {
+            console.log(err);
+        }
     }
 
     await User.findOne({email: email, password: password}).then(u => {
@@ -538,7 +565,11 @@ exports.like = async (req, res, next) => {
     let password = null;
 
     if(passwordCookie) {
-        password = AES.decrypt(decodeURIComponent(passwordCookie).substring(passwordCookie.indexOf('=') + 1), 'changeit').toString(CryptoJS.enc.Utf8);
+        try {
+            password = AES.decrypt(decodeURIComponent(passwordCookie).substring(passwordCookie.indexOf('=') + 1), 'changeit').toString(CryptoJS.enc.Utf8);
+        } catch(err) {
+            console.log(err);
+        }
     }
 
     await User.findOne({email: email, password: password}).then(u => {
@@ -603,7 +634,11 @@ exports.replyGet = async (req, res, next) => {
     let password = null;
 
     if(passwordCookie) {
-        password = AES.decrypt(decodeURIComponent(passwordCookie).substring(passwordCookie.indexOf('=') + 1), 'changeit').toString(CryptoJS.enc.Utf8);
+        try {
+            password = AES.decrypt(decodeURIComponent(passwordCookie).substring(passwordCookie.indexOf('=') + 1), 'changeit').toString(CryptoJS.enc.Utf8);
+        } catch(err) {
+            console.log(err);
+        }
     }
 
     await User.findOne({email: email, password: password}).then(u => {
@@ -682,7 +717,11 @@ exports.replyPost = async (req, res, next) => {
     let password = null;
 
     if(passwordCookie) {
-        password = AES.decrypt(decodeURIComponent(passwordCookie).substring(passwordCookie.indexOf('=') + 1), 'changeit').toString(CryptoJS.enc.Utf8);
+        try {
+            password = AES.decrypt(decodeURIComponent(passwordCookie).substring(passwordCookie.indexOf('=') + 1), 'changeit').toString(CryptoJS.enc.Utf8);
+        } catch(err) {
+            console.log(err);
+        }
     }
 
     await User.findOne({email: email, password: password}).then(u => {
