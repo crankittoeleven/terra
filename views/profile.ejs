@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-31PMTMG2MX"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-31PMTMG2MX');
+    </script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welcome &ndash; TERRA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Lora:ital@1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/js-datepicker/dist/datepicker.min.css">
+    <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+    <div class="sm-wrapper">
+        <h2>Profile</h2>
+        <a href="../" class="material-icons md-36 home-anchor">home</a>
+        <% if(isOwner) { %>
+            <a href="../logout" class="btn-red btn-logout">Logout</a>
+            <% if(validation) { %>
+                <div style="color:red"><%= validation %></div>
+            <% } %>
+            <form method="post">
+                <label for="firstName">First Name</label>
+                <input id="firstName" name="firstName" value="<%= user.firstName %>" />
+                <label #for="lastName">Last Name</label>
+                <input id="lastName" name="lastName" value="<%= user.lastName %>" />
+                <label for="email">Email</label>
+                <input id="email" name="email" value="<%= user.email %>" />
+                <label for="password">Password</label>
+                <input id="password" name="password" value="<%= user.password %>" type="password" />
+                <label for="birthDate">Birth Date</label>
+                <input id="birthDate" name="birthDate" value="<%= user.birthDate %>" />
+                <label for="city">City</label>
+                <input id="city" name="city" value="<%= user.city %>" />
+                <label for="country">Country</label>
+                <input id="country" name="country" value="<%= user.country %>" />
+                <label for="twitter">Twitter</label>
+                <input id="twitter" name="twitter" value="<%= user.twitter %>" />
+                <label for="linkedIn">LinkedIn</label>
+                <input id="linkedIn" name="linkedIn" value="<%= user.linkedIn %>" />
+                <label for="instagram">Instagram</label>
+                <input id="instagram" name="instagram" value="<%= user.instagram %>" />
+                <button type="submit" class="btn-red">Save</button>
+            </form>
+        <% } else { %>
+            <label for="firstName">First Name</label>
+            <%= user.firstName %>
+            <label #for="lastName">Last Name</label>
+            <%= user.lastName %>
+            <label for="email">Email</label>
+            <%= user.email %>
+            <label for="birthDate">Birth Date</label>
+            <%= user.birthDate %>
+            <label for="city">City</label>
+            <%= user.city %>
+            <label for="country">Country</label>
+            <%= user.country %>
+            <label for="twitter">Twitter</label>
+            <%= user.twitter %>
+            <label for="linkedIn">LinkedIn</label>
+            <%= user.linkedIn %>
+            <label for="instagram">Instagram</label>
+            <%= user.instagram %>
+        <% } %>
+    </div>
+    <script src="../lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://unpkg.com/js-datepicker"></script>
+    <script>
+        const picker = datepicker('#birthDate');
+    </script>
+    <script src="./js/script.js"></script>
+</body>
+</html>

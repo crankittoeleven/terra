@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-31PMTMG2MX"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-31PMTMG2MX');
+    </script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welcome &ndash; TERRA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Lora:ital@1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+    <div class="preloader"></div>
+    <div class="sm-wrapper">
+        <a href="../" class="material-icons md-36 home-anchor" style="position:static;float:right">home</a>
+        <div class="emojis" style="display:none;">
+            <div class="emoji">😀</div>
+            <div class="emoji">😁</div>
+            <div class="emoji">😇</div>
+            <div class="emoji">😍</div>
+            <div class="emoji">🤑</div>
+            <div class="emoji">🤓</div>
+            <div class="emoji">😎</div>
+            <div class="emoji">🤡</div>
+            <div class="emoji">😛</div>
+            <div class="emoji">😷</div>
+            <div class="emoji">🥶</div>
+            <div class="emoji">😈</div>
+            <div class="emoji">💩</div>
+            <div class="emoji">👽</div>
+            <div class="emoji">😡</div>
+            <div class="emoji">🥳</div>
+            <div class="emoji">💪</div>
+            <div class="emoji">👍</div>
+            <div class="emoji">👎</div>
+            <div class="emoji">✌️</div>
+            <div class="emoji">🤘</div>
+            <div class="emoji">🤙</div>
+            <div class="emoji">🤟</div>
+            <div class="emoji">👉</div>
+        </div>
+        <% if(validation) { %>
+            <div style="color:red"><%= validation %></div>
+        <% } %>
+        <div class="post-panel bp3-card" *ngIf="userId">
+        <form method="post">
+            <textarea name="content" class="post-area bp3-ui-text" placeholder="Type something..." required></textarea>
+            <input type="hidden" class="file-name" name="file" />
+            <button class="bp3-button bp3-icon-edit" type="submit">Post</button>
+        </form>
+        <ul class="uploads">
+
+        </ul>
+        <iframe id="fileFrame" name="fileFrame" src="" style="display:none;"></iframe>
+        <div class="notification" *ngIf="images.length"></div>
+        <span class="material-icons mi-mood">mood</span>
+        <form method="post" asp-controller="Home" asp-action="UploadImage" target="fileFrame" class="frm-upload" enctype="multipart/form-data">
+            <input class="file-upload" type="file" name="file" accept=".png, .PNG, .jpg, .JPG, .gif, .GIF" (change)="uploadImage()" />
+            <input type="hidden" name="id" [value]="userId" />
+        </form>
+        </div>
+        <div class="post">
+            <a href="../profile/<%= post.authorId %>"><%= post.authorFirstName %>:</a> <span class="content"><%= post.content %></span>
+            <div class="post-footer">
+                <a class="like-anchor" href="javascript:void(0)" data-postid="<%= post.id %>"><img src="../img/like.png" alt="" /></a>
+                <span><%= likes %></span>
+                <% if(isLoggedIn) { %>
+                    <a href="../reply/<%= post.id %>" class="btn-white">Reply</a>
+                <% } else { %>
+                    <a href="javascript:void(0)" onclick="alert('You need to be logged in.')" class="btn-white">Reply</a>
+                <% } %>
+            </div>
+            <div class="replies">
+                <% replies.filter(r => r.postId === post.id).forEach(function(reply) { %>
+                    <div class="reply">
+                        <a href="../profile/<%= reply.authorId %>"><%= reply.authorFirstName %>:</a> <%= reply.content %>
+                    </div>
+                <% }); %>
+            </div>
+        </div>
+    </div>
+    <script src="../lib/jquery/dist/jquery.min.js"></script>
+    <script src="../js/script.js"></script>
+</body>
+</html>

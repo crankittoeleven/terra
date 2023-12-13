@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-31PMTMG2MX"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-31PMTMG2MX');
+    </script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welcome &ndash; TERRA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Lora:ital@1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="icon" type="image/x-icon" href="./favicon.ico">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="col-left">
+            <% if(isLoggedIn) { %>
+                <a href="./profile/<%= user.id %>" class="btn-red btn-join-mobi">User</a>
+            <% } else { %>
+                <a href="./signup" class="btn-red btn-join-mobi">Join</a>
+            <% } %>
+            <img class="eagle" src="./img/logo.png" alt="" />
+            <% for(let i = 0; i < topics.length; i += 3) { %>
+                <div class="topic">
+                    <h3><%= topics[i].title %></h3>
+                    <% if(isLoggedIn) { %>
+                        <a href="./add/<%= topics[i].id %>" class="btn-green">Add</a>
+                    <% } else { %>
+                        <a href="javascript:void(0)" onclick="alert('You need to be logged in.')" class="btn-green">Add</a>
+                    <% } %>
+                    <img src="./img/posts/<%= topics[i].title.toLowerCase().replaceAll(' ', '') + '.png' %>" alt="" />
+                    <div class="posts">
+                        <% posts.filter(p => p.topicId === topics[i].id).forEach(function(post) { %>
+                            <div class="post">
+                                <a href="./profile/<%= post.authorId %>"><%= post.authorFirstName %>:</a> <span class="content"><%= post.content %></span>
+                                <div class="post-footer">
+                                    <a class="like-anchor" href="javascript:void(0)" data-postid="<%= post.id %>"><img src="./img/like.png" alt="" /></a>
+                                    <span><%= likes.filter(l => l.to === post.id).length %></span>
+                                    <% if(isLoggedIn) { %>
+                                        <a href="./reply/<%= post.id %>" class="btn-white">Reply</a>
+                                    <% } else { %>
+                                        <a href="javascript:void(0)" onclick="alert('You need to be logged in.')" class="btn-white">Reply</a>
+                                    <% } %>
+                                </div>
+                                <div class="replies">
+                                    <% replies.filter(r => r.postId === post.id).forEach(function(reply) { %>
+                                        <div class="reply">
+                                            <a href="./profile/<%= reply.authorId %>"><%= reply.authorFirstName %>:</a> <%= reply.content %>
+                                        </div>
+                                    <% }); %>
+                                </div>
+                            </div>
+                        <% }); %> 
+                    </div>
+                </div>
+            <% } %>
+        </div>
+        <div class="col-right">
+            <img src="./img/banner.png" class="banner" alt="" />
+            <img src="./img/banner.png" class="banner" alt="" />
+            <% if(isLoggedIn) { %>
+                <a href="./profile/<%= user.id %>" class="btn-red btn-join">User</a>
+            <% } else { %>
+                <a href="./signup" class="btn-red btn-join">Join</a>
+            <% } %>
+            <div class="col-b-left">
+                <% for(let i = 1; i < topics.length; i += 3) { %>
+                    <div class="topic">
+                        <h3><%= topics[i].title %></h3>
+                        <% if(isLoggedIn) { %>
+                            <a href="./add/<%= topics[i].id %>" class="btn-green">Add</a>
+                        <% } else { %>
+                            <a href="javascript:void(0)" onclick="alert('You need to be logged in.')" class="btn-green">Add</a>
+                        <% } %>
+                        <img src="./img/posts/<%= topics[i].title.toLowerCase().replaceAll(' ', '') + '.png' %>" alt="" />
+                        <div class="posts">
+                            <% posts.filter(p => p.topicId === topics[i].id).forEach(function(post) { %>
+                                <div class="post">
+                                    <a href="./profile/<%= post.authorId %>"><%= post.authorFirstName %>:</a> <span class="content"><%= post.content %></span>
+                                    <div class="post-footer">
+                                        <a class="like-anchor" href="javascript:void(0)" data-postid="<%= post.id %>"><img src="./img/like.png" alt="" /></a>
+                                        <span><%= likes.filter(l => l.to === post.id).length %></span>
+                                        <% if(isLoggedIn) { %>
+                                            <a href="./reply/<%= post.id %>" class="btn-white">Reply</a>
+                                        <% } else { %>
+                                            <a href="javascript:void(0)" onclick="alert('You need to be logged in.')" class="btn-white">Reply</a>
+                                        <% } %>
+                                    </div>
+                                    <div class="replies">
+                                        <% replies.filter(r => r.postId === post.id).forEach(function(reply) { %>
+                                            <div class="reply">
+                                                <a href="./profile/<%= reply.authorId %>"><%= reply.authorFirstName %>:</a> <%= reply.content %>
+                                            </div>
+                                        <% }); %>
+                                    </div>
+                                </div>
+                            <% }); %> 
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+            <div class="col-b-right">
+                <% for(let i = 2; i < topics.length; i += 3) { %>
+                    <div class="topic">
+                        <h3><%= topics[i].title %></h3>
+                        <% if(isLoggedIn) { %>
+                            <a href="./add/<%= topics[i].id %>" class="btn-green">Add</a>
+                        <% } else { %>
+                            <a href="javascript:void(0)" onclick="alert('You need to be logged in.')" class="btn-green">Add</a>
+                        <% } %>
+                        <img src="./img/posts/<%= topics[i].title.toLowerCase().replaceAll(' ', '') + '.png' %>" alt="" />
+                        <div class="posts">
+                            <% posts.filter(p => p.topicId === topics[i].id).forEach(function(post) { %>
+                                <div class="post">
+                                    <a href="./profile/<%= post.authorId %>"><%= post.authorFirstName %>:</a> <span class="content"><%= post.content %></span>
+                                    <div class="post-footer">
+                                        <a class="like-anchor" href="javascript:void(0)" data-postid="<%= post.id %>"><img src="./img/like.png" alt="" /></a>
+                                        <span><%= likes.filter(l => l.to === post.id).length %></span>
+                                        <% if(isLoggedIn) { %>
+                                            <a href="./reply/<%= post.id %>" class="btn-white">Reply</a>
+                                        <% } else { %>
+                                            <a href="javascript:void(0)" onclick="alert('You need to be logged in.')" class="btn-white">Reply</a>
+                                        <% } %>
+                                    </div>
+                                    <div class="replies">
+                                        <% replies.filter(r => r.postId === post.id).forEach(function(reply) { %>
+                                            <div class="reply">
+                                                <a href="./profile/<%= reply.authorId %>"><%= reply.authorFirstName %>:</a> <%= reply.content %>
+                                            </div>
+                                        <% }); %>
+                                    </div>
+                                </div>
+                            <% }); %> 
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+    <script src="./lib/jquery/dist/jquery.min.js"></script>
+    <script src="./js/script.js"></script>
+</body>
+</html>
